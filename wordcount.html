@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -112,9 +112,12 @@ const topWordCountDisplay = document.getElementById("topWordCount");
 textarea.addEventListener("input", function () {
     let text = textarea.value.trim();
     let words = 0;
-    let matches = text.match(/\b[\w'-]+\b/g);
+    let matches = text.match(/\b[\w'-]{2,}\b/g);
     if (matches) {
-        words = matches.length;
+        words = matches.filter(word => {
+            // Require at least one letter (excludes pure numbers and special chars)
+            return /[a-zA-Z]/.test(word);
+        }).length;
     }
     wordCountDisplay.textContent = words;
     topWordCountDisplay.textContent = words;
